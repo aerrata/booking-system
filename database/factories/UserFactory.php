@@ -22,8 +22,16 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $this->faker->addProvider(new \Faker\Provider\ms_MY\PhoneNumber($this->faker));
+        $this->faker->addProvider(new \Faker\Provider\ms_MY\Person($this->faker));
+
         return [
             'name' => $this->faker->name(),
+            'ic_number' => $this->faker->myKadNumber(),
+            'phone_number' => $this->faker->mobileNumber(null, null),
+            'office_number' => $this->faker->fixedLineNumber(null, null),
+            'position' => $this->faker->randomElement(['Technician', 'Officer']),
+            'department' => $this->faker->randomElement(['IT', 'HR']),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
