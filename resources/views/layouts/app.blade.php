@@ -11,16 +11,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-
+    
     @stack('scripts')
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css" rel="stylesheet">
 
     @stack('styles')
 </head>
@@ -28,9 +24,23 @@
     <div id="app">
         <x-navbar />
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="mx-4">
+            <div class="row justify-content-center py-4">
+                <div class="col-md-12">
+                    <x-alert />
+                </div>
+                @auth
+                <div class="col-md-2">
+                    <x-side-menu />
+                </div>
+                @endauth
+                <div class="col-md-10">
+                    <main>
+                        @yield('content')
+                    </main>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

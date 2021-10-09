@@ -25,3 +25,8 @@ Route::get('/room', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('room', App\Http\Controllers\RoomController::class);
+    Route::resource('booking', App\Http\Controllers\BookingController::class);
+});

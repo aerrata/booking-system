@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use App\Models\Booking;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\BookingStatus;
 
 class BookingController extends Controller
 {
@@ -14,7 +17,22 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::where('enabled', 1)
+            ->with('room', 'booking_status')
+            ->get()
+            ->transform(function ($booking) {
+                return [
+                    'title' => $booking->applicant,
+                    'url' => route('booking.edit', $booking),
+                    'start' => $booking->start_date,
+                    'end' => $booking->end_date,
+                    'color' => $booking->booking_status->color,
+                ];
+            });
+
+        return view('booking.index', [
+            'bookings' => $bookings
+        ]);
     }
 
     /**
@@ -24,7 +42,11 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        return view('booking.edit', [
+            'booking' => new Booking,
+            'booking_statuses' => BookingStatus::where('enabled', 1)->get(),
+            'rooms' => Room::where('enabled', 1)->get()
+        ]);
     }
 
     /**
@@ -35,7 +57,27 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'applicant' => ['required', 'max:255'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+            'room_id' => ['required'],
+        ]);
+
+        Booking::create([
+            'uuid' => Str::uuid(),
+            'applicant' => $request->applicant,
+            'purpose' => $request->purpose,
+            'notes' => $request->notes,
+            'participant_total' => $request->participant_total,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'room_id' => $request->room_id,
+            'booking_status_id' => 1, // Dalam proses
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('booking.index')->with('success', 'Booking created.');
     }
 
     /**
@@ -57,7 +99,11 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        return view('booking.edit', [
+            'booking' => $booking,
+            'booking_statuses' => BookingStatus::where('enabled', 1)->get(),
+            'rooms' => Room::where('enabled', 1)->get()
+        ]);
     }
 
     /**
@@ -69,7 +115,26 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $request->validate([
+            'applicant' => ['required', 'max:255'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+            'room_id' => ['required'],
+        ]);
+
+        $booking->update([
+            'applicant' => $request->applicant,
+            'purpose' => $request->purpose,
+            'notes' => $request->notes,
+            'participant_total' => $request->participant_total,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'room_id' => $request->room_id,
+            'booking_status_id' => $request->booking_status_id,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('booking.index')->with('success', 'Booking updated.');
     }
 
     /**

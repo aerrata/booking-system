@@ -10,4 +10,10 @@ class Room extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    // Relationships
+    public function room_category()
+    {
+        return $this->belongsTo(RoomCategory::class);
+    }
 }

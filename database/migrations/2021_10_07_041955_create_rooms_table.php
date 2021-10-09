@@ -21,7 +21,6 @@ class CreateRoomsTable extends Migration
             $table->integer('room_category_id')->unsigned()->nullable();
             $table->boolean('enabled')->default(true);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
