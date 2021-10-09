@@ -36,7 +36,7 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    $(function () {
         var calendarEl = document.getElementById("calendar")
         var bookings = {!! json_encode($bookings) !!}
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -56,7 +56,10 @@
             //     $('#eventModal').modal()
             // },
         });
-        calendar.render();
+
+        setTimeout(function(){
+            calendar.render()
+        })
     });
 </script>
 
