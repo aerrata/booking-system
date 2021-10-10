@@ -101,6 +101,8 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
+        Gate::authorize('update', $room);
+
         return view('room.edit', [
             'room' => $room,
             'room_categories' => RoomCategory::where('enabled', 1)->get()
@@ -146,6 +148,8 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
+        Gate::authorize('delete', $room);
+
         $room->delete();
 
         return redirect()->route('room.index')->with('success', 'Room deleted.');

@@ -57,7 +57,11 @@ class RoomPolicy
      */
     public function update(User $user, Room $room)
     {
-        //
+        if($user->hasPermissionTo('edit_room')){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -69,7 +73,11 @@ class RoomPolicy
      */
     public function delete(User $user, Room $room)
     {
-        //
+        if($user->hasPermissionTo('delete_room')){
+            return true;
+        }
+
+        return false;
     }
 
     /**

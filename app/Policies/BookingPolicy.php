@@ -58,6 +58,10 @@ class BookingPolicy
             return true;
         }
 
+        if($user->hasRole('manager') || $user->hasRole('admin')){
+            return true;
+        }
+
         return false;
     }
 
