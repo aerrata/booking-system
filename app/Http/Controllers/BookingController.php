@@ -7,6 +7,7 @@ use App\Models\Booking;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\BookingStatus;
+use App\Services\EventService;
 use Illuminate\Support\Facades\Gate;
 
 class BookingController extends Controller
@@ -59,7 +60,7 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, EventService $eventService)
     {
         $request->validate([
             'applicant' => ['required', 'max:255'],
@@ -70,6 +71,18 @@ class BookingController extends Controller
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'room_id' => ['required'],
         ]);
+
+        if ($eventService->isRoomTaken($request->all())) {
+            return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'This room is not available based on selected dates');
+        }
+
+        if ($eventService->isWithinCapacity($request->all())) {
+            return redirect()->back()
+                    ->withInput()
+                    ->with('error', "Your total participant is more than room's capacity");
+        }
 
         Booking::create([
             'uuid' => Str::uuid(),
@@ -123,7 +136,7 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, Booking $booking, EventService $eventService)
     {
         $request->validate([
             'applicant' => ['required', 'max:255'],
@@ -134,6 +147,18 @@ class BookingController extends Controller
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'room_id' => ['required'],
         ]);
+
+        if ($eventService->isRoomTaken($request->all())) {
+            return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'This room is not available based on selected dates');
+        }
+
+        if ($eventService->isWithinCapacity($request->all())) {
+            return redirect()->back()
+                    ->withInput()
+                    ->with('error', "Your total participant is more than room's capacity");
+        }
 
         $booking->update([
             'applicant' => $request->applicant,
