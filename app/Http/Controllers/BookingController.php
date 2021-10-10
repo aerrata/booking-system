@@ -7,6 +7,7 @@ use App\Models\Booking;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\BookingStatus;
+use Illuminate\Support\Facades\Gate;
 
 class BookingController extends Controller
 {
@@ -100,11 +101,14 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Booking $booking)
+    public function edit(Booking $booking, Request $request)
     {
+        Gate::authorize('update', $booking);
+
         return view('booking.edit', [
             'booking' => $booking,
             'booking_statuses' => BookingStatus::where('enabled', 1)->get(),
+            'approved' => $request->user()->can('approve_booking'),
             'rooms' => Room::where('enabled', 1)->get()
         ]);
     }
@@ -123,7 +127,7 @@ class BookingController extends Controller
             'purpose' => ['required', 'max:255'],
             'notes' => ['required', 'max:500'],
             'participant_total' => ['required', 'numeric'],
-            'start_date' => ['required', 'date', 'after_or_equal:now'],
+            'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'room_id' => ['required'],
         ]);
@@ -136,7 +140,7 @@ class BookingController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'room_id' => $request->room_id,
-            'booking_status_id' => $request->booking_status_id,
+            'booking_status_id' => $request->booking_status_id ?? 1,
             'user_id' => auth()->id(),
         ]);
 

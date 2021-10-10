@@ -53,7 +53,12 @@ class BookingPolicy
      */
     public function update(User $user, Booking $booking)
     {
-        //
+        //can access all permission_id
+        if($user->hasPermissionTo('edit_booking') && $booking->user_id == $user->id && $booking->booking_status_id === 1){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -90,5 +95,15 @@ class BookingPolicy
     public function forceDelete(User $user, Booking $booking)
     {
         //
+    }
+
+    public function approveBooking(User $user){
+
+        if($user->hasPermissionTo('approve_booking')){
+            return true;
+        }
+
+        return false;
+
     }
 }

@@ -24,7 +24,7 @@ class Booking extends Model
 
     public function booking_status()
     {
-        return $this->belongsTo(BookingStatus::class);
+        return $this->belongsTo(BookingStatus::class)->withDefault(['name' => '']);
     }
 
     public function getStartDateFormattedAttribute()

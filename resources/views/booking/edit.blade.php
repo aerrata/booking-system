@@ -104,25 +104,27 @@
             </div>
 
             @if ($booking->id)
-            <div class="form-group row">
-                <label for="capacity" class="col-sm-2 col-form-label">Booking Status</label>
-                <div class="col-sm-8">
-                    <select class="custom-select @error('booking_status_id') is-invalid @enderror" id="booking_status_id" name="booking_status_id">
-                        <option value="">Choose..</option>
-                        @foreach ($booking_statuses as $booking_status)
-                        <option value="{{ $booking_status->id }}"
-                            {{ $booking_status->id == old('booking_status_id', $booking->booking_status_id) ? 'selected' : '' }}>
-                            {{ $booking_status->name }}</option>
-                        @endforeach
-                    </select>
+                @if ($approved)
+                <div class="form-group row">
+                    <label for="capacity" class="col-sm-2 col-form-label">Booking Status</label>
+                    <div class="col-sm-8">
+                        <select class="custom-select @error('booking_status_id') is-invalid @enderror" id="booking_status_id" name="booking_status_id">
+                            <option value="">Choose..</option>
+                            @foreach ($booking_statuses as $booking_status)
+                            <option value="{{ $booking_status->id }}"
+                                {{ $booking_status->id == old('booking_status_id', $booking->booking_status_id) ? 'selected' : '' }}>
+                                {{ $booking_status->name }}</option>
+                            @endforeach
+                        </select>
 
-                    @error('booking_status_id')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                        @error('booking_status_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                 </div>
-            </div>
+                @endif
             @endif
 
           <div class="d-flex justify-content-end">

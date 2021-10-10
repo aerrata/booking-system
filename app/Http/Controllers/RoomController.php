@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Models\RoomCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RoomController extends Controller
 {
@@ -29,6 +30,9 @@ class RoomController extends Controller
 
         return view('room.index', [
             'rooms' => $rooms,
+            'create_room' => $request->user()->can('create_room'),
+            'edit_room' => $request->user()->can('edit_room'),
+            'delete_room' => $request->user()->can('delete_room'),
             'room_categories' => RoomCategory::where('enabled', 1)->get()
         ]);
     }
@@ -40,6 +44,8 @@ class RoomController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Room::class);
+
         return view('room.edit', [
             'room' => new Room,
             'room_categories' => RoomCategory::where('enabled', 1)->get()

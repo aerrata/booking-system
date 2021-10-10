@@ -40,7 +40,7 @@ class PermissionSeeder extends Seeder
 
         // Users
         $userUser = \App\Models\User::factory()->create([
-            'name' => 'Admin',
+            'name' => 'User',
             'email' => 'user@domain.com',
         ]);
         $userUser->assignRole($roleUser);

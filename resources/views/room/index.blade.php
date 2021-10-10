@@ -63,8 +63,12 @@
                             @csrf
                             @method('delete')
                         </form>
-                        <a class="btn btn-sm btn-link" href="{{ route('room.edit', $room) }}">Edit</a>
-                        <button type="submit" class="btn btn-sm btn-link" form="form-room-destroy" onclick="return confirm('Are you sure?')">Delete</button>
+                        @if($edit_room)
+                            <a class="btn btn-sm btn-link" href="{{ route('room.edit', $room) }}">Edit</a>
+                        @endif
+                        @if($delete_room)
+                            <button type="submit" class="btn btn-sm btn-link" form="form-room-destroy" onclick="return confirm('Are you sure?')">Delete</button>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -73,7 +77,9 @@
 
         {{ $rooms->links() }}
 
+        @if($create_room)
         <a href="{{ route('room.create') }}" class="btn btn-primary">New</a>
+        @endif
     </div>
 </div>
 @endsection
