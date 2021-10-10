@@ -59,8 +59,11 @@ class BookingController extends Controller
     {
         $request->validate([
             'applicant' => ['required', 'max:255'],
-            'start_date' => ['required'],
-            'end_date' => ['required'],
+            'purpose' => ['required', 'max:255'],
+            'notes' => ['required', 'max:500'],
+            'participant_total' => ['required', 'numeric'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
             'room_id' => ['required'],
         ]);
 
@@ -117,8 +120,11 @@ class BookingController extends Controller
     {
         $request->validate([
             'applicant' => ['required', 'max:255'],
-            'start_date' => ['required'],
-            'end_date' => ['required'],
+            'purpose' => ['required', 'max:255'],
+            'notes' => ['required', 'max:500'],
+            'participant_total' => ['required', 'numeric'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
             'room_id' => ['required'],
         ]);
 

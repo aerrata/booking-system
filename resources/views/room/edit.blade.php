@@ -9,21 +9,33 @@
             <div class="form-group row">
               <label for="name" class="col-sm-2 col-form-label">Name</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $room->name) }}">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $room->name) }}">
+
+                @error('name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
             </div>
 
             <div class="form-group row">
               <label for="capacity" class="col-sm-2 col-form-label">Capacity</label>
               <div class="col-sm-6">
-                <input type="number" class="form-control" id="capacity" name="capacity" value="{{ old('capacity', $room->capacity) }}">
+                <input type="number" class="form-control @error('capacity') is-invalid @enderror" id="capacity" name="capacity" value="{{ old('capacity', $room->capacity) }}">
+                
+                @error('capacity')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
             </div>
 
             <div class="form-group row">
                 <label for="capacity" class="col-sm-2 col-form-label">Room Category</label>
                 <div class="col-sm-8">
-                    <select class="custom-select" id="room_category_id" name="room_category_id">
+                    <select class="custom-select @error('room_category_id') is-invalid @enderror" id="room_category_id" name="room_category_id">
                         <option value="">Choose..</option>
                         @foreach ($room_categories as $room_category)
                         <option value="{{ $room_category->id }}"
@@ -31,6 +43,12 @@
                             {{ $room_category->name }}</option>
                         @endforeach
                     </select>
+
+                    @error('room_category_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
             </div>
 
