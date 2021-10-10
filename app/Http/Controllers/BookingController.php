@@ -20,6 +20,9 @@ class BookingController extends Controller
     {
         $bookings = Booking::where('enabled', 1)
             ->with('room', 'booking_status')
+            ->when(auth()->user()->hasRole('user'), function ($query) {
+                $query->where('user_id', auth()->id());
+            })
             ->get()
             ->transform(function ($booking) {
                 return [

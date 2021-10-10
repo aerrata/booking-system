@@ -28,14 +28,13 @@ class DatabaseSeeder extends Seeder
         //     'remember_token' => Str::random(10),
         // ]);
 
-        \App\Models\User::factory(5)->create();
-        \App\Models\Room::factory(20)->create();
-        \App\Models\Booking::factory(10)->create();
-
-
+        // \App\Models\User::factory(5)->create();
         $this->call([
             PermissionSeeder::class,
         ]);
+
+        \App\Models\Room::factory(20)->create();
+        \App\Models\Booking::factory(10)->create();
 
     }
 }
