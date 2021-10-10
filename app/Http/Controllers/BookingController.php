@@ -62,7 +62,7 @@ class BookingController extends Controller
             'purpose' => ['required', 'max:255'],
             'notes' => ['required', 'max:500'],
             'participant_total' => ['required', 'numeric'],
-            'start_date' => ['required', 'date'],
+            'start_date' => ['required', 'date', 'after_or_equal:now'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'room_id' => ['required'],
         ]);
@@ -123,7 +123,7 @@ class BookingController extends Controller
             'purpose' => ['required', 'max:255'],
             'notes' => ['required', 'max:500'],
             'participant_total' => ['required', 'numeric'],
-            'start_date' => ['required', 'date'],
+            'start_date' => ['required', 'date', 'after_or_equal:now'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'room_id' => ['required'],
         ]);
