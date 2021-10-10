@@ -19,21 +19,21 @@ class PermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Permissions
-        Permission::create(['name' => 'create rooms']);
-        Permission::create(['name' => 'edit rooms']);
-        Permission::create(['name' => 'delete rooms']);
+        Permission::create(['name' => 'create_room']);
+        Permission::create(['name' => 'edit_room']);
+        Permission::create(['name' => 'delete_room']);
 
-        Permission::create(['name' => 'create bookings']);
-        Permission::create(['name' => 'edit bookings']);
-        Permission::create(['name' => 'delete bookings']);
-        Permission::create(['name' => 'approve bookings']);
+        Permission::create(['name' => 'create_booking']);
+        Permission::create(['name' => 'edit_booking']);
+        Permission::create(['name' => 'delete_booking']);
+        Permission::create(['name' => 'approve_booking']);
 
         // Roles
         $roleUser = Role::create(['name' => 'user'])
-            ->givePermissionTo(['create booking', 'edit booking']);
+            ->givePermissionTo(['create_booking', 'edit_booking']);
 
         $roleManager = Role::create(['name' => 'manager'])
-            ->givePermissionTo('create rooms', 'edit rooms', 'delete rooms', 'approve bookings');
+            ->givePermissionTo('create_room', 'edit_room', 'delete_room', 'approve_booking');
 
         $roleAdmin = Role::create(['name' => 'admin'])
             ->givePermissionTo(Permission::all());
@@ -48,12 +48,14 @@ class PermissionSeeder extends Seeder
         $userManager = \App\Models\User::factory()->create([
             'name' => 'Manager',
             'email' => 'manager@domain.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
         $userManager->assignRole($roleManager);
 
         $userAdmin = \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@domain.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
         $userAdmin->assignRole($roleAdmin);
     }
