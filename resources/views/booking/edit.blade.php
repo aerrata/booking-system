@@ -3,7 +3,7 @@
     <div class="card-header">{{ $booking->id ? "Edit Booking - $booking->applicant" : 'Create Booking' }}</div>
 
     <div class="card-body">
-        <form id="booking-edit" action="{{ $booking->id ? route('booking.update', $booking) : route('booking.store') }}" method="post">
+        <form id="booking-edit" action="{{ $booking->id ? route('booking.update', $booking) : route('booking.store') }}" method="POST">
             @csrf
             @method($booking->id ? 'put' : 'post')
             <div class="form-group row">

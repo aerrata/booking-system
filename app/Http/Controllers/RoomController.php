@@ -13,12 +13,23 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::where('enabled', 1)->with('room_category')->orderBy('updated_at', 'desc')->paginate(10);
+        $rooms = Room::where('enabled', 1)
+            ->with('room_category')
+            ->when($request->name, function ($query, $name) {
+                $query->where('name', 'like', '%' . $name . '%');
+            })
+            ->when($request->room_category_id, function ($query, $room_category_id) {
+                $query->where('room_category_id', $room_category_id);
+            })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
 
         return view('room.index', [
-            'rooms' => $rooms
+            'rooms' => $rooms,
+            'room_categories' => RoomCategory::where('enabled', 1)->get()
         ]);
     }
 

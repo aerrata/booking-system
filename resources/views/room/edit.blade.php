@@ -3,7 +3,7 @@
     <div class="card-header">{{ $room->id ? "Edit Room - $room->name" : 'Create Room' }}</div>
 
     <div class="card-body">
-        <form id="room-edit" action="{{ $room->id ? route('room.update', $room) : route('room.store') }}" method="post">
+        <form id="room-edit" action="{{ $room->id ? route('room.update', $room) : route('room.store') }}" method="POST">
             @csrf
             @method($room->id ? 'put' : 'post')
             <div class="form-group row">

@@ -31,7 +31,7 @@
                     <td>{{ $booking->end_date->format('d/m/Y g:i A') }}</td>
                     <td>{{ optional($booking->booking_status)->name }}</td>
                     <td>
-                        <form id="form-booking-destroy" action="{{ route('booking.destroy', $booking) }}" method="post">
+                        <form id="form-booking-destroy" action="{{ route('booking.destroy', $booking) }}" method="POST">
                             @csrf
                             @method('delete')
                         </form>
