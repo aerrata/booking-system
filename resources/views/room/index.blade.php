@@ -59,15 +59,15 @@
                     <td>{{ $room->capacity }}</td>
                     <td>{{ $room->room_category->name }}</td>
                     <td>
-                        <form id="form-room-destroy" action="{{ route('room.destroy', $room) }}" method="POST">
+                        <form action="{{ route('room.destroy', $room) }}" method="POST">
                             @csrf
-                            @method('delete')
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-link" onclick="return confirm('Are you sure?')">Delete</button>
                         </form>
                         @if($edit_room)
                             <a class="btn btn-sm btn-link" href="{{ route('room.edit', $room) }}">Edit</a>
                         @endif
                         @if($delete_room)
-                            <button type="submit" class="btn btn-sm btn-link" form="form-room-destroy" onclick="return confirm('Are you sure?')">Delete</button>
                         @endif
                     </td>
                 </tr>
