@@ -148,11 +148,11 @@ class BookingController extends Controller
             'room_id' => ['required'],
         ]);
 
-        if ($eventService->isRoomTaken($request->all())) {
-            return redirect()->back()
-                    ->withInput()
-                    ->with('error', 'This room is not available based on selected dates');
-        }
+        // if ($eventService->isRoomTaken($request->all())) {
+        //     return redirect()->back()
+        //             ->withInput()
+        //             ->with('error', 'This room is not available based on selected dates');
+        // }
 
         if ($eventService->isWithinCapacity($request->all())) {
             return redirect()->back()
