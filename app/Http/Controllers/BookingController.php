@@ -7,8 +7,10 @@ use App\Models\Booking;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\BookingStatus;
+use App\Notifications\BookingStatusUpdated;
 use App\Services\BookingService;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
 {
@@ -176,8 +178,11 @@ class BookingController extends Controller
             'end_date' => $request->end_date,
             'room_id' => $request->room_id,
             'booking_status_id' => $request->booking_status_id ?? 1,
-            'user_id' => auth()->id(),
         ]);
+
+        if (auth()->user()->hasRole(['admin', 'manager'])) {
+            Notification::send($booking->user, new BookingStatusUpdated($booking));
+        }
 
         return redirect()->route('booking.index')->with('success', 'Booking updated.');
     }

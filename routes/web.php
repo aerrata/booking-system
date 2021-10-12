@@ -29,6 +29,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth'])->group(function () {
     Route::resource('room', App\Http\Controllers\RoomController::class);
     Route::resource('booking', App\Http\Controllers\BookingController::class);
+    Route::resource('notification', App\Http\Controllers\NotificationController::class);
 });
 
 Route::get('/login-as/{username}', function ($username) {

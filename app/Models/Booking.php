@@ -24,9 +24,15 @@ class Booking extends Model
 
     public function booking_status()
     {
-        return $this->belongsTo(BookingStatus::class)->withDefault(['name' => '']);
+        return $this->belongsTo(BookingStatus::class)->withDefault(['name' => null]);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Accessor
     public function getStartDateFormattedAttribute()
     {
         return $this->start_date ? $this->start_date->format('Y-m-d\TH:i') : null;
