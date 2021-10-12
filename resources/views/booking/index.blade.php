@@ -3,6 +3,8 @@
     <div class="card-header">Bookings</div>
 
     <div class="card-body">
+        @includeWhen(request()->query('view') === 'table', 'room._table-view', ['bookings' => $bookings])
+
         <div class="mb-3">
             <div id="calendar"></div>
         </div>

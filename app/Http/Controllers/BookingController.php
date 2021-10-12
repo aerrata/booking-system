@@ -17,10 +17,14 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $bookings = Booking::where('enabled', 1)
             ->with('room', 'booking_status')
+            ->when(auth()->user()->hasRole('user'), function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+            // TODO
             ->when(auth()->user()->hasRole('user'), function ($query) {
                 $query->where('user_id', auth()->id());
             })

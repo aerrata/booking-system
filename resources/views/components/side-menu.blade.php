@@ -7,7 +7,7 @@
         <span class="ti ti-bed mr-1"></span>
         Room
     </a>
-    <a class="nav-link {{ (strpos(Route::currentRouteName(), 'booking') === 0) ? 'active' : '' }}" href="{{ route('booking.index') }}">
+    <a class="nav-link {{ (strpos(Route::currentRouteName(), 'booking') === 0) ? 'active' : '' }}" href="{{ route('booking.index', ['view' => 'table']) }}">
         <span class="ti ti-bookmarks mr-1"></span>
         Bookings
     </a>
