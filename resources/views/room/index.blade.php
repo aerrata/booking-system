@@ -59,7 +59,7 @@
                     <td>{{ $room->capacity }}</td>
                     <td>{{ $room->room_category->name }}</td>
                     <td>
-                        <form action="{{ route('room.destroy', $room) }}" method="POST" id="form-room-destroy-{{$room->id}}">
+                        <form action="{{ route('room.destroy', $room) }}" method="POST" id="form-room-destroy-{{ $room->id }}">
                             @csrf
                             @method('DELETE')
 
@@ -68,7 +68,7 @@
                             <a class="btn btn-sm btn-link" href="{{ route('room.edit', $room) }}">Edit</a>
                         @endif
                         @if($delete_room)
-                            <button type="submit" class="btn btn-sm btn-link" form="form-room-destroy-{{$room->id}}" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-link" form="form-room-destroy-{{ $room->id }}" onclick="return confirm('Are you sure?')">Delete</button>
                         @endif
                     </td>
                 </tr>
