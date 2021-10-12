@@ -41,7 +41,7 @@ class RoomPolicy
      */
     public function create(User $user)
     {
-        if($user->hasPermissionTo('create_room')){
+        if ($user->hasPermissionTo('create_room')) {
             return true;
         }
 
@@ -57,7 +57,7 @@ class RoomPolicy
      */
     public function update(User $user, Room $room)
     {
-        if($user->hasPermissionTo('edit_room')){
+        if ($user->hasPermissionTo('edit_room')) {
             return true;
         }
 
@@ -73,7 +73,7 @@ class RoomPolicy
      */
     public function delete(User $user, Room $room)
     {
-        if($user->hasPermissionTo('delete_room')){
+        if ($user->hasPermissionTo('delete_room')) {
             return true;
         }
 

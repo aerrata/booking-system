@@ -24,12 +24,12 @@
             <td>{{ $booking->end_date->format('d/m/Y g:i A') }}</td>
             <td>{{ optional($booking->booking_status)->name }}</td>
             <td>
-                <form id="form-booking-destroy" action="{{ route('booking.destroy', $booking) }}" method="POST">
+                <form id="form-booking-destroy-{{ $booking->id }}" action="{{ route('booking.destroy', $booking) }}" method="POST">
                     @csrf
                     @method('delete')
                 </form>
                 <a class="btn btn-sm btn-link" href="{{ route('booking.edit', $booking) }}">Edit</a>
-                <button type="submit" class="btn btn-sm btn-link" form="form-booking-destroy" onclick="return confirm('Are you sure?')">Delete</button>
+                <button type="submit" class="btn btn-sm btn-link" form="form-booking-destroy-{{ $booking->id }}" onclick="return confirm('Are you sure?')">Delete</button>
             </td>
         </tr>
         @endforeach

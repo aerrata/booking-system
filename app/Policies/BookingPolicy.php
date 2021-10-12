@@ -54,11 +54,11 @@ class BookingPolicy
     public function update(User $user, Booking $booking)
     {
         //can access all permission_id
-        if($user->hasPermissionTo('edit_booking') && $booking->user_id == $user->id && $booking->booking_status_id === 1){
+        if ($user->hasPermissionTo('edit_booking') && $booking->user_id == $user->id && $booking->booking_status_id === 1){
             return true;
         }
 
-        if($user->hasRole('manager') || $user->hasRole('admin')){
+        if ($user->hasRole('manager') || $user->hasRole('admin')){
             return true;
         }
 
@@ -103,7 +103,7 @@ class BookingPolicy
 
     public function approveBooking(User $user){
 
-        if($user->hasPermissionTo('approve_booking')){
+        if ($user->hasPermissionTo('approve_booking')){
             return true;
         }
 

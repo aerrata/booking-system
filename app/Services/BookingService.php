@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Room;
 use Carbon\Carbon;
 
-class EventService
+class BookingService
 {
     public function isRoomTaken($requestData)
     {

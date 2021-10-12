@@ -104,7 +104,7 @@
             </div>
 
             @if ($booking->id)
-                @if ($approved)
+                @can ('approve_booking')
                 <div class="form-group row">
                     <label for="capacity" class="col-sm-2 col-form-label">Booking Status</label>
                     <div class="col-sm-8">
@@ -124,7 +124,7 @@
                         @enderror
                     </div>
                 </div>
-                @endif
+                @endcan
             @endif
 
           <div class="d-flex justify-content-end">

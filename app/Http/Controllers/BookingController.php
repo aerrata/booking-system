@@ -7,7 +7,7 @@ use App\Models\Booking;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\BookingStatus;
-use App\Services\EventService;
+use App\Services\BookingService;
 use Illuminate\Support\Facades\Gate;
 
 class BookingController extends Controller
@@ -19,37 +19,32 @@ class BookingController extends Controller
      */
     public function index(Request $request)
     {
-        
-        if($request->query('view') === 'table'){
+        if ($request->query('view') === 'calendar') {
             $bookings = Booking::where('enabled', 1)
-            ->with('room', 'booking_status')
-            ->when(auth()->user()->hasRole('user'), function ($query) {
-                $query->where('user_id', auth()->id());
-            })->paginate(15)->withQueryString();
-
-            $table = true;
-        }else{
-            $table = false;
-        $bookings = Booking::where('enabled', 1)
-            ->with('room', 'booking_status')
-            ->when(auth()->user()->hasRole('user'), function ($query) {
-                $query->where('user_id', auth()->id());
-            })
-            ->get()
-            ->transform(function ($booking) {
-                return [
-                    'title' => $booking->applicant,
-                    'url' => route('booking.edit', $booking),
-                    'start' => $booking->start_date,
-                    'end' => $booking->end_date,
-                    'color' => $booking->booking_status->color,
-                ];
-            });
+                ->with('room', 'booking_status')
+                ->when(auth()->user()->hasRole('user'), function ($query) {
+                    $query->where('user_id', auth()->id());
+                })
+                ->get()
+                ->transform(function ($booking) {
+                    return [
+                        'title' => $booking->applicant,
+                        'url' => route('booking.edit', $booking),
+                        'start' => $booking->start_date,
+                        'end' => $booking->end_date,
+                        'color' => $booking->booking_status->color,
+                    ];
+                });
+        } else {
+            $bookings = Booking::where('enabled', 1)
+                ->with('room', 'booking_status')
+                ->when(auth()->user()->hasRole('user'), function ($query) {
+                    $query->where('user_id', auth()->id());
+                })->paginate(15)->withQueryString();
         }
 
         return view('booking.index', [
             'bookings' => $bookings,
-            'table' => $table
         ]);
     }
 
@@ -73,7 +68,7 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, EventService $eventService)
+    public function store(Request $request, BookingService $bookingService)
     {
         $request->validate([
             'applicant' => ['required', 'max:255'],
@@ -85,16 +80,16 @@ class BookingController extends Controller
             'room_id' => ['required'],
         ]);
 
-        if ($eventService->isRoomTaken($request->all())) {
+        if ($bookingService->isRoomTaken($request->all())) {
             return redirect()->back()
-                    ->withInput()
-                    ->with('error', 'This room is not available based on selected dates');
+                ->withInput()
+                ->with('error', 'This room is not available based on selected dates');
         }
 
-        if ($eventService->isWithinCapacity($request->all())) {
+        if ($bookingService->isWithinCapacity($request->all())) {
             return redirect()->back()
-                    ->withInput()
-                    ->with('error', "Your total participant is more than room's capacity");
+                ->withInput()
+                ->with('error', "Your total participant is more than room's capacity");
         }
 
         Booking::create([
@@ -137,7 +132,6 @@ class BookingController extends Controller
         return view('booking.edit', [
             'booking' => $booking,
             'booking_statuses' => BookingStatus::where('enabled', 1)->get(),
-            'approved' => $request->user()->can('approve_booking'),
             'rooms' => Room::where('enabled', 1)->get()
         ]);
     }
@@ -149,7 +143,7 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking, EventService $eventService)
+    public function update(Request $request, Booking $booking, BookingService $bookingService)
     {
         $request->validate([
             'applicant' => ['required', 'max:255'],
@@ -161,16 +155,16 @@ class BookingController extends Controller
             'room_id' => ['required'],
         ]);
 
-        // if ($eventService->isRoomTaken($request->all())) {
+        // if ($bookingService->isRoomTaken($request->all())) {
         //     return redirect()->back()
         //             ->withInput()
         //             ->with('error', 'This room is not available based on selected dates');
         // }
 
-        if ($eventService->isWithinCapacity($request->all())) {
+        if ($bookingService->isWithinCapacity($request->all())) {
             return redirect()->back()
-                    ->withInput()
-                    ->with('error', "Your total participant is more than room's capacity");
+                ->withInput()
+                ->with('error', "Your total participant is more than room's capacity");
         }
 
         $booking->update([
@@ -196,6 +190,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+
+        return redirect()->route('booking.index')->with('success', 'Booking deleted.');
     }
 }

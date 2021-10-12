@@ -30,9 +30,6 @@ class RoomController extends Controller
 
         return view('room.index', [
             'rooms' => $rooms,
-            'create_room' => $request->user()->can('create_room'),
-            'edit_room' => $request->user()->can('edit_room'),
-            'delete_room' => $request->user()->can('delete_room'),
             'room_categories' => RoomCategory::where('enabled', 1)->get()
         ]);
     }

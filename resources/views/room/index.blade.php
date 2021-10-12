@@ -62,14 +62,13 @@
                         <form action="{{ route('room.destroy', $room) }}" method="POST" id="form-room-destroy-{{ $room->id }}">
                             @csrf
                             @method('DELETE')
-
                         </form>
-                        @if($edit_room)
+                        @can ('edit_room')
                             <a class="btn btn-sm btn-link" href="{{ route('room.edit', $room) }}">Edit</a>
-                        @endif
-                        @if($delete_room)
+                        @endcan
+                        @can ('delete_room')
                             <button type="submit" class="btn btn-sm btn-link" form="form-room-destroy-{{ $room->id }}" onclick="return confirm('Are you sure?')">Delete</button>
-                        @endif
+                        @endcan
                     </td>
                 </tr>
                 @endforeach
@@ -78,9 +77,9 @@
 
         {{ $rooms->links() }}
 
-        @if($create_room)
+        @can ('create_room')
         <a href="{{ route('room.create') }}" class="btn btn-primary">New</a>
-        @endif
+        @endcan
     </div>
 </div>
 @endsection
