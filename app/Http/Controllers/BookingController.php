@@ -19,12 +19,19 @@ class BookingController extends Controller
      */
     public function index(Request $request)
     {
-        $bookings = Booking::where('enabled', 1)
+        
+        if($request->query('view') === 'table'){
+            $bookings = Booking::where('enabled', 1)
             ->with('room', 'booking_status')
             ->when(auth()->user()->hasRole('user'), function ($query) {
                 $query->where('user_id', auth()->id());
-            })
-            // TODO
+            })->paginate(15)->withQueryString();
+
+            $table = true;
+        }else{
+            $table = false;
+        $bookings = Booking::where('enabled', 1)
+            ->with('room', 'booking_status')
             ->when(auth()->user()->hasRole('user'), function ($query) {
                 $query->where('user_id', auth()->id());
             })
@@ -38,9 +45,11 @@ class BookingController extends Controller
                     'color' => $booking->booking_status->color,
                 ];
             });
+        }
 
         return view('booking.index', [
-            'bookings' => $bookings
+            'bookings' => $bookings,
+            'table' => $table
         ]);
     }
 
