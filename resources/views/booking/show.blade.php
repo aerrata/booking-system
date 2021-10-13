@@ -27,14 +27,14 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label text-md-right">Start At</label>
             <div class="col-sm-10">
-                <p class="my-2 text-secondary">{{ $booking->start_date }}</p>
+                <p class="my-2 text-secondary">{{ $booking->start_date->format('d/m/Y g:i A') }}</p>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label text-md-right">End At</label>
             <div class="col-sm-10">
-                <p class="my-2 text-secondary">{{ $booking->end_date }}</p>
+                <p class="my-2 text-secondary">{{ $booking->end_date->format('d/m/Y g:i A') }}</p>
             </div>
         </div>
 
