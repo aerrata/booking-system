@@ -28,24 +28,37 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user_count = Cache::remember('user_count', Carbon::parse('10 minutes'), function () {
-            return User::count();
-        });
-
-        $room_count = Cache::remember('room_count', Carbon::parse('10 minutes'), function () {
-            return Room::where('enabled', 1)->count();
-        });
-        
-        $booking_count = Cache::remember('booking_count', Carbon::parse('10 minutes'), function () {
-            return Booking::where([['enabled', 1], ['booking_status_id', 2]])->count();
-        });
-
-        return view('home', [
-            'count' => [
-                'user' => $user_count,
-                'room' => $room_count,
-                'booking' => $booking_count,
-            ]
+        return view('home.index', [
+            'userCountPartialCache' => Cache::get('partial.user_count'),
+            'roomCountPartialCache' => Cache::get('partial.room_count'),
+            'bookingCountPartialCache' => Cache::get('partial.booking_count'),
         ]);
+    }
+    
+    public function partialUserCount()
+    {
+        return Cache::remember('partials.user_count', Carbon::parse('10 minutes'), function () {
+            return view('home._user_count', [
+                'user_count' => User::count()
+            ])->render();
+        });
+    }
+
+    public function partialRoomCount()
+    {
+        return Cache::remember('partials.room_count', Carbon::parse('10 minutes'), function () {
+            return view('home._room_count', [
+                'room_count' => Room::where('enabled', 1)->count()
+            ])->render();
+        });
+    }
+
+    public function partialBookingCount()
+    {
+        return Cache::remember('partials.booking_count', Carbon::parse('10 minutes'), function () {
+            return view('home._booking_count', [
+                'booking_count' => Booking::where([['enabled', 1], ['booking_status_id', 2]])->count()
+            ])->render();
+        });
     }
 }

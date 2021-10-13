@@ -25,6 +25,9 @@ Route::get('/room', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/partials/user-count', [App\Http\Controllers\HomeController::class, 'partialUserCount'])->name('home.partialUserCount');
+Route::get('/home/partials/room-count', [App\Http\Controllers\HomeController::class, 'partialRoomCount'])->name('home.partialRoomCount');
+Route::get('/home/partials/booking-count', [App\Http\Controllers\HomeController::class, 'partialBookingCount'])->name('home.partialBookingCount');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('room', App\Http\Controllers\RoomController::class);

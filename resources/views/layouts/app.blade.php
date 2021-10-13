@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/include-fragment-element@5.0.0/dist/index-umd.min.js"></script>
     
     @stack('scripts')
 
