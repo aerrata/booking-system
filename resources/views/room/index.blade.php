@@ -63,6 +63,7 @@
                             @csrf
                             @method('DELETE')
                         </form>
+                        <a class="btn btn-sm btn-link" href="{{ route('room.show', $room) }}">View</a>
                         @can ('edit_room')
                             <a class="btn btn-sm btn-link" href="{{ route('room.edit', $room) }}">Edit</a>
                         @endcan

@@ -32,14 +32,4 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Accessor
-    public function getStartDateFormattedAttribute()
-    {
-        return $this->start_date ? $this->start_date->format('Y-m-d\TH:i') : null;
-    }
-
-    public function getEndDateFormattedAttribute()
-    {
-        return $this->end_date ? $this->end_date->format('Y-m-d\TH:i') : null;
-    }
 }

@@ -28,6 +28,7 @@
                     @csrf
                     @method('delete')
                 </form>
+                <a class="btn btn-sm btn-link" href="{{ route('booking.show', $booking) }}">View</a>
                 <a class="btn btn-sm btn-link" href="{{ route('booking.edit', $booking) }}">Edit</a>
                 <button type="submit" class="btn btn-sm btn-link" form="form-booking-destroy-{{ $booking->id }}" onclick="return confirm('Are you sure?')">Delete</button>
             </td>

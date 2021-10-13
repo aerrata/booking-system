@@ -7,9 +7,9 @@ use App\Models\Booking;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\BookingStatus;
-use App\Notifications\BookingStatusUpdated;
 use App\Services\BookingService;
 use Illuminate\Support\Facades\Gate;
+use App\Notifications\BookingStatusChanged;
 use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
@@ -30,6 +30,7 @@ class BookingController extends Controller
                 ->get()
                 ->transform(function ($booking) {
                     return [
+                        'id' => $booking->id,
                         'title' => $booking->applicant,
                         'url' => route('booking.edit', $booking),
                         'start' => $booking->start_date,
@@ -103,7 +104,7 @@ class BookingController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'room_id' => $request->room_id,
-            'booking_status_id' => 1, // Dalam proses
+            'booking_status_id' => 1,
             'user_id' => auth()->id(),
         ]);
 
@@ -118,7 +119,9 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return view('booking.show', [
+            'booking' => $booking->load('booking_status', 'room'),
+        ]);
     }
 
     /**
@@ -180,8 +183,10 @@ class BookingController extends Controller
             'booking_status_id' => $request->booking_status_id ?? 1,
         ]);
 
-        if (auth()->user()->hasRole(['admin', 'manager'])) {
-            Notification::send($booking->user, new BookingStatusUpdated($booking));
+        if ($booking->wasChanged('booking_status_id')) {
+            if (auth()->user()->hasRole(['admin', 'manager'])) {
+                Notification::send($booking->user, new BookingStatusChanged($booking));
+            }
         }
 
         return redirect()->route('booking.index')->with('success', 'Booking updated.');

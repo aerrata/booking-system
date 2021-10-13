@@ -7,7 +7,7 @@
             @csrf
             @method($booking->id ? 'put' : 'post')
             <div class="form-group row">
-              <label for="name" class="col-sm-2 col-form-label">Applicant Name</label>
+              <label for="applicant" class="col-sm-2 col-form-label text-md-right">Applicant Name</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control @error('applicant') is-invalid @enderror" id="applicant" name="applicant" value="{{ old('applicant', $booking->applicant) }}">
                 
@@ -20,7 +20,7 @@
             </div>
 
             <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Purpose</label>
+                <label for="purpose" class="col-sm-2 col-form-label text-md-right">Purpose</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control @error('purpose') is-invalid @enderror" id="purpose" name="purpose" value="{{ old('purpose', $booking->purpose) }}">
                     
@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Notes</label>
+                <label for="notes" class="col-sm-2 col-form-label text-md-right">Notes</label>
                 <div class="col-sm-10">
                     <textarea class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes">{{ old('notes', $booking->notes) }}</textarea>
                     @error('notes')
@@ -45,9 +45,9 @@
             </div>
 
             <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Start At</label>
+                <label for="start_date" class="col-sm-2 col-form-label text-md-right">Start At</label>
                 <div class="col-sm-5">
-                    <input type="datetime-local" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date', $booking->start_date_formatted) }}">
+                    <input type="datetime-local" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date', $booking->start_date->format('Y-m-d\TH:i')) }}">
                     
                     @error('start_date')
                     <span class="invalid-feedback" role="alert">
@@ -58,9 +58,9 @@
             </div>
 
             <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">End At</label>
+                <label for="end_date" class="col-sm-2 col-form-label text-md-right">End At</label>
                 <div class="col-sm-5">
-                    <input type="datetime-local" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date" value="{{ old('end_date', $booking->end_date_formatted) }}">
+                    <input type="datetime-local" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date" value="{{ old('end_date', $booking->end_date->format('Y-m-d\TH:i')) }}">
                         
                     @error('end_date')
                     <span class="invalid-feedback" role="alert">
@@ -71,20 +71,20 @@
             </div>
 
             <div class="form-group row">
-              <label for="capacity" class="col-sm-2 col-form-label">Participant Total</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control @error('participant_total') is-invalid @enderror" id="participant_total" name="participant_total" value="{{ old('participant_total', $booking->participant_total) }}">
-                
-                @error('participant_total')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
+                <label for="participant_total" class="col-sm-2 col-form-label text-md-right">Participant Total</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control @error('participant_total') is-invalid @enderror" id="participant_total" name="participant_total" value="{{ old('participant_total', $booking->participant_total) }}">
+                    
+                    @error('participant_total')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
             </div>
 
             <div class="form-group row">
-                <label for="capacity" class="col-sm-2 col-form-label">Room</label>
+                <label for="room_id" class="col-sm-2 col-form-label text-md-right">Room</label>
                 <div class="col-sm-8">
                     <select class="custom-select @error('room_id') is-invalid @enderror" id="room_id" name="room_id">
                         <option value="">Choose..</option>
@@ -106,7 +106,7 @@
             @if ($booking->id)
                 @can ('approve_booking')
                 <div class="form-group row">
-                    <label for="capacity" class="col-sm-2 col-form-label">Booking Status</label>
+                    <label for="booking_status_id" class="col-sm-2 col-form-label text-md-right">Booking Status</label>
                     <div class="col-sm-8">
                         <select class="custom-select @error('booking_status_id') is-invalid @enderror" id="booking_status_id" name="booking_status_id">
                             <option value="">Choose..</option>

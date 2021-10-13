@@ -7,7 +7,7 @@
             @csrf
             @method($room->id ? 'put' : 'post')
             <div class="form-group row">
-              <label for="name" class="col-sm-2 col-form-label">Name</label>
+              <label for="name" class="col-sm-2 col-form-label text-md-right">Name</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $room->name) }}">
 
@@ -20,7 +20,7 @@
             </div>
 
             <div class="form-group row">
-              <label for="capacity" class="col-sm-2 col-form-label">Capacity</label>
+              <label for="capacity" class="col-sm-2 col-form-label text-md-right">Capacity</label>
               <div class="col-sm-6">
                 <input type="number" class="form-control @error('capacity') is-invalid @enderror" id="capacity" name="capacity" value="{{ old('capacity', $room->capacity) }}">
                 
@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group row">
-                <label for="capacity" class="col-sm-2 col-form-label">Room Category</label>
+                <label for="capacity" class="col-sm-2 col-form-label text-md-right">Room Category</label>
                 <div class="col-sm-8">
                     <select class="custom-select @error('room_category_id') is-invalid @enderror" id="room_category_id" name="room_category_id">
                         <option value="">Choose..</option>
