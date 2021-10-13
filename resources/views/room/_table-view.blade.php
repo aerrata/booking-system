@@ -38,9 +38,4 @@
 
 {{ $bookings->links() }}
 
-<a href="{{ route('booking.create') }}" class="btn btn-primary">
-    <i class="ti ti-plus"></i>
-    New
-</a>
-
 

@@ -1,11 +1,5 @@
-        <div class="mb-3">
-            <div id="calendar"></div>
-        </div>
-        <a href="{{ route('booking.create') }}" class="btn btn-primary">
-            <i class="ti ti-plus"></i>
-            New
-        </a>
-    </div>
+<div class="mb-3">
+    <div id="calendar"></div>
 </div>
 
 @push('scripts')
@@ -14,7 +8,7 @@
 <script>
     $(function () {
         var calendarEl = document.getElementById("calendar")
-        var bookings = {!! json_encode($bookings) !!}
+        var bookings = {!! json_encode($bookings) !!};
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
             headerToolbar: {
@@ -39,8 +33,9 @@
     });
 </script>
 
-@endpush
-
-@push('styles')
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css" rel="stylesheet" />
+@endpush @push('styles')
+<link
+    href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css"
+    rel="stylesheet"
+/>
 @endpush

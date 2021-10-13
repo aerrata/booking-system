@@ -15,6 +15,11 @@
 
         @includeWhen((request()->query('view') === 'table' || request()->query('view') === null), 'room._table-view', ['bookings' => $bookings])
         @includeWhen(request()->query('view') === 'calendar', 'room._calendar-view', ['bookings' => $bookings])
+        
+        <a href="{{ route('booking.create') }}" class="btn btn-primary">
+            <i class="ti ti-plus"></i>
+            New
+        </a>
     </div>
 </div>
 @endsection
