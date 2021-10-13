@@ -1,7 +1,10 @@
         <div class="mb-3">
             <div id="calendar"></div>
         </div>
-        <a href="{{ route('booking.create') }}" class="btn btn-primary">New</a>
+        <a href="{{ route('booking.create') }}" class="btn btn-primary">
+            <i class="ti ti-plus"></i>
+            New
+        </a>
     </div>
 </div>
 
