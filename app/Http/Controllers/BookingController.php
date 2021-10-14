@@ -32,7 +32,7 @@ class BookingController extends Controller
                     return [
                         'id' => $booking->id,
                         'title' => $booking->applicant,
-                        'url' => route('booking.edit', $booking),
+                        'url' => route('booking.show', $booking),
                         'start' => $booking->start_date,
                         'end' => $booking->end_date,
                         'color' => $booking->booking_status->color,

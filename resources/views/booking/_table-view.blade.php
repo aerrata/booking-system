@@ -29,7 +29,9 @@
                     @method('delete')
                 </form>
                 <a class="btn btn-sm btn-link" href="{{ route('booking.show', $booking) }}">View</a>
+                @if ($booking->booking_status_id === 1)
                 <a class="btn btn-sm btn-link" href="{{ route('booking.edit', $booking) }}">Edit</a>
+                @endif
                 <button type="submit" class="btn btn-sm btn-link" form="form-booking-destroy-{{ $booking->id }}" onclick="return confirm('Are you sure?')">Delete</button>
             </td>
         </tr>

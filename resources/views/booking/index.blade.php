@@ -13,8 +13,8 @@
         </a>
         @endif
 
-        @includeWhen((request()->query('view') === 'table' || request()->query('view') === null), 'room._table-view', ['bookings' => $bookings])
-        @includeWhen(request()->query('view') === 'calendar', 'room._calendar-view', ['bookings' => $bookings])
+        @includeWhen((request()->query('view') === 'table' || request()->query('view') === null), 'booking._table-view', ['bookings' => $bookings])
+        @includeWhen(request()->query('view') === 'calendar', 'booking._calendar-view', ['bookings' => $bookings])
         
         <a href="{{ route('booking.create') }}" class="btn btn-primary">
             <i class="ti ti-plus"></i>
