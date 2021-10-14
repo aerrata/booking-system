@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Booking;
+use App\Models\BookingStatus;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -54,7 +55,7 @@ class BookingPolicy
     public function update(User $user, Booking $booking)
     {
         //can access all permission_id
-        if ($user->hasPermissionTo('edit_booking') && $booking->user_id == $user->id && $booking->booking_status_id === 1){
+        if ($user->hasPermissionTo('edit_booking') && $booking->user_id == $user->id && $booking->booking_status_id === BookingStatus::DALAM_PROSES){
             return true;
         }
 

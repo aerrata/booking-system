@@ -143,7 +143,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking, Request $request)
     {
-        Gate::authorize('update', $booking);
+        Gate::authorize('update', $booking); //illuminate-support-facade
 
         return view('booking.edit', [
             'booking' => $booking,
