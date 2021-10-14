@@ -64,7 +64,7 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label text-md-right">Room</label>
+            <label class="col-sm-2 col-form-label text-md-right">Room Name</label>
             <div class="col-sm-10">
                 <p class="my-2 text-secondary">{{ $booking->room->name }}</p>
             </div>
@@ -77,12 +77,12 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-end">
-            <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Cancel</a>
-            @if ($booking->booking_status_id === 1)
-            <a href="{{ route('booking.edit', $booking) }}" class="btn btn-primary btn-sm">Edit</a>
-            @endif
-        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+        <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Back</a>
+        @if ($booking->booking_status_id === 1)
+        <a href="{{ route('booking.edit', $booking) }}" class="btn btn-primary btn-sm">Edit</a>
+        @endif
     </div>
 </div>
 @endsection

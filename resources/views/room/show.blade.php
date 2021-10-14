@@ -24,10 +24,10 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-end">
-            <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Cancel</a>
-            <a href="{{ route('room.edit', $room) }}" class="btn btn-primary btn-sm">Edit</a>
-        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+        <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Back</a>
+        <a href="{{ route('room.edit', $room) }}" class="btn btn-primary btn-sm">Edit</a>
     </div>
 </div>
 @endsection
