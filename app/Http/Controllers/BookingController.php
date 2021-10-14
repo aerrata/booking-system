@@ -43,7 +43,10 @@ class BookingController extends Controller
                 ->with('room', 'booking_status')
                 ->when(auth()->user()->hasRole('user'), function ($query) {
                     $query->where('user_id', auth()->id());
-                })->paginate(15)->withQueryString();
+                })
+                ->orderBy('updated_at', 'desc')
+                ->paginate(15)
+                ->withQueryString();
         }
 
         return view('booking.index', [
@@ -81,6 +84,7 @@ class BookingController extends Controller
             'start_date' => ['required', 'date', 'after_or_equal:now'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'room_id' => ['required'],
+            'supporting_document_attachment' => ['required', 'mimes:pdf', 'max:1024'],
         ]);
 
         if ($bookingService->isRoomTaken($request->all())) {
@@ -95,7 +99,7 @@ class BookingController extends Controller
                 ->with('error', "Your total participant is more than room's capacity");
         }
 
-        Booking::create([
+        $booking = Booking::create([
             'uuid' => Str::uuid(),
             'applicant' => $request->applicant,
             'purpose' => $request->purpose,
@@ -107,6 +111,13 @@ class BookingController extends Controller
             'booking_status_id' => 1,
             'user_id' => auth()->id(),
         ]);
+
+        if ($request->hasFile('supporting_document_attachment')) {
+            if ($booking->getFirstMedia()) {
+                $booking->getFirstMedia()->delete();
+            }
+            $booking->addMediaFromRequest('supporting_document_attachment')->toMediaCollection();
+        }
 
         return redirect()->route('booking.index')->with('success', 'Booking created.');
     }
@@ -158,13 +169,8 @@ class BookingController extends Controller
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'room_id' => ['required'],
+            'supporting_document_attachment' => ['mimes:pdf', 'max:1024'],
         ]);
-
-        // if ($bookingService->isRoomTaken($request->all())) {
-        //     return redirect()->back()
-        //             ->withInput()
-        //             ->with('error', 'This room is not available based on selected dates');
-        // }
 
         if ($bookingService->isWithinCapacity($request->all())) {
             return redirect()->back()
@@ -182,6 +188,13 @@ class BookingController extends Controller
             'room_id' => $request->room_id,
             'booking_status_id' => $request->booking_status_id ?? 1,
         ]);
+
+        if ($request->hasFile('supporting_document_attachment')) {
+            if ($booking->getFirstMedia()) {
+                $booking->getFirstMedia()->delete();
+            }
+            $booking->addMediaFromRequest('supporting_document_attachment')->toMediaCollection();
+        }
 
         if ($booking->wasChanged('booking_status_id')) {
             if (auth()->user()->hasRole(['admin', 'manager'])) {

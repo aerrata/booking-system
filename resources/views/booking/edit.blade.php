@@ -3,7 +3,7 @@
     <div class="card-header">{{ $booking->id ? "Edit Booking - $booking->applicant" : 'Create Booking' }}</div>
 
     <div class="card-body">
-        <form id="booking-edit" action="{{ $booking->id ? route('booking.update', $booking) : route('booking.store') }}" method="POST">
+        <form id="booking-edit" action="{{ $booking->id ? route('booking.update', $booking) : route('booking.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method($booking->id ? 'put' : 'post')
             <div class="form-group row">
@@ -47,7 +47,7 @@
             <div class="form-group row">
                 <label for="start_date" class="col-sm-2 col-form-label text-md-right">Start At</label>
                 <div class="col-sm-5">
-                    <input type="datetime-local" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date', $booking->start_date->format('Y-m-d\TH:i')) }}">
+                    <input type="datetime-local" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date', optional($booking->start_date)->format('Y-m-d\TH:i')) }}">
                     
                     @error('start_date')
                     <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
             <div class="form-group row">
                 <label for="end_date" class="col-sm-2 col-form-label text-md-right">End At</label>
                 <div class="col-sm-5">
-                    <input type="datetime-local" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date" value="{{ old('end_date', $booking->end_date->format('Y-m-d\TH:i')) }}">
+                    <input type="datetime-local" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date" value="{{ old('end_date', optional($booking->end_date)->format('Y-m-d\TH:i')) }}">
                         
                     @error('end_date')
                     <span class="invalid-feedback" role="alert">
@@ -76,6 +76,28 @@
                     <input type="number" class="form-control @error('participant_total') is-invalid @enderror" id="participant_total" name="participant_total" value="{{ old('participant_total', $booking->participant_total) }}">
                     
                     @error('participant_total')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="supporting_document_attachment" class="col-sm-2 col-form-label text-md-right">Supporting Document (.pdf)</label>
+                <div class="col-sm-6">
+                    @if ($booking->supporting_document_attachment)
+                    <p class="my-2">
+                        <a href="{{ $booking->supporting_document_attachment->url }}" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="ti ti-download mr-1"></i>
+                            {{ $booking->supporting_document_attachment->name }}
+                        </a>
+                    </p>
+                    @endif
+                    
+                    <input type="file" class="form-control @error('supporting_document_attachment') is-invalid @enderror" id="supporting_document_attachment" name="supporting_document_attachment">
+                    
+                    @error('supporting_document_attachment')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
