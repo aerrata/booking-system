@@ -47,7 +47,7 @@
             <div class="form-group row">
                 <label for="start_date" class="col-sm-2 col-form-label text-md-right">Start At</label>
                 <div class="col-sm-5">
-                    <input type="datetime-local" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date', $booking->start_date->format('Y-m-d\TH:i')) }}">
+                    <input type="datetime-local" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date" value="{{ old('start_date', optional($booking->start_date)->format('Y-m-d\TH:i')) }}">
                     
                     @error('start_date')
                     <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
             <div class="form-group row">
                 <label for="end_date" class="col-sm-2 col-form-label text-md-right">End At</label>
                 <div class="col-sm-5">
-                    <input type="datetime-local" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date" value="{{ old('end_date', $booking->end_date->format('Y-m-d\TH:i')) }}">
+                    <input type="datetime-local" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date" value="{{ old('end_date', optional($booking->end_date)->format('Y-m-d\TH:i')) }}">
                         
                     @error('end_date')
                     <span class="invalid-feedback" role="alert">

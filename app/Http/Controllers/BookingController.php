@@ -132,7 +132,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking, Request $request)
     {
-        Gate::authorize('update', $booking);
+        Gate::authorize('update', $booking); //illuminate-support-facade
 
         return view('booking.edit', [
             'booking' => $booking,
@@ -183,11 +183,11 @@ class BookingController extends Controller
             'booking_status_id' => $request->booking_status_id ?? 1,
         ]);
 
-        if ($booking->wasChanged('booking_status_id')) {
-            if (auth()->user()->hasRole(['admin', 'manager'])) {
-                Notification::send($booking->user, new BookingStatusChanged($booking));
-            }
-        }
+        // if ($booking->wasChanged('booking_status_id')) {
+        //     if (auth()->user()->hasRole(['admin', 'manager'])) {
+        //         Notification::send($booking->user, new BookingStatusChanged($booking));
+        //     }
+        // }
 
         return redirect()->route('booking.index')->with('success', 'Booking updated.');
     }
