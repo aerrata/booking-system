@@ -16,7 +16,7 @@
                             <input type="text" class="form-control" id="name" name="name" value="{{ request()->input('name') }}">
                         </div>
                         <div class="col-md-6">
-                            <label for="name" class="col-form-label">Room Category</label>
+                            <label for="room_category_id" class="col-form-label">Room Category</label>
                             <select class="custom-select" id="room_category_id" name="room_category_id">
                                 <option value="">Choose..</option>
                                 @foreach ($room_categories as $room_category)
