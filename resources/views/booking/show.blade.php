@@ -78,9 +78,9 @@
         </div>
 
         <div class="d-flex justify-content-end">
-            <a href="{{ url()->previous() }}" class="btn btn-link mr-2">Cancel</a>
+            <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Cancel</a>
             @if ($booking->booking_status_id === 1)
-            <a href="{{ route('booking.edit', $booking) }}" class="btn btn-primary">Edit</a>
+            <a href="{{ route('booking.edit', $booking) }}" class="btn btn-primary btn-sm">Edit</a>
             @endif
         </div>
     </div>

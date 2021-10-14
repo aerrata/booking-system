@@ -4,7 +4,7 @@
 
     <div class="card-body">
         <div>
-            <button class="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#filter">
+            <button class="btn btn-primary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#filter">
                 <i class="ti ti-filter mr-1"></i>
                 Filter
             </button>
@@ -26,11 +26,11 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary btn-sm">
                             <i class="ti ti-search mr-1"></i>
                             Search
                         </button>
-                        <a href="{{ route('room.index') }}" class="btn btn-primary">
+                        <a href="{{ route('room.index') }}" class="btn btn-primary btn-sm">
                             <i class="ti ti-x mr-1"></i>
                             Reset
                         </a>
@@ -79,7 +79,7 @@
         {{ $rooms->links() }}
 
         @can ('create_room')
-        <a href="{{ route('room.create') }}" class="btn btn-primary">
+        <a href="{{ route('room.create') }}" class="btn btn-primary btn-sm">
             <i class="ti ti-plus"></i>
             New
         </a>

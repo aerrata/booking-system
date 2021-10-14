@@ -53,8 +53,8 @@
             </div>
 
           <div class="d-flex justify-content-end">
-              <a href="{{ url()->previous() }}" class="btn btn-link mr-2">Cancel</a>
-              <button type="submit" class="btn btn-primary" form="room-edit">Submit</button>
+              <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Cancel</a>
+              <button type="submit" class="btn btn-primary btn-sm" form="room-edit">Submit</button>
           </div>
         </form>
     </div>
