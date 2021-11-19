@@ -84,7 +84,7 @@
             </div>
 
             <div class="form-group row">
-                <label for="supporting_document_attachment" class="col-sm-2 col-form-label text-md-right">Supporting Document (.pdf)</label>
+                <label for="supporting_document_attachment" class="col-sm-2 col-form-label text-md-right">Supporting Document (PDF, 1MB max)</label>
                 <div class="col-sm-6">
                     @if ($booking->supporting_document_attachment)
                     <p class="my-2">
@@ -106,7 +106,7 @@
             </div>
 
             <div class="form-group row">
-                <label for="room_id" class="col-sm-2 col-form-label text-md-right">Room</label>
+                <label for="room_id" class="col-sm-2 col-form-label text-md-right">Room Name</label>
                 <div class="col-sm-8">
                     <select class="custom-select @error('room_id') is-invalid @enderror" id="room_id" name="room_id">
                         <option value="">Choose..</option>
@@ -149,11 +149,11 @@
                 @endcan
             @endif
 
-          <div class="d-flex justify-content-end">
-              <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Cancel</a>
-              <button type="submit" class="btn btn-primary btn-sm" form="booking-edit">Submit</button>
-          </div>
         </form>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+        <a href="{{ url()->previous() }}" class="btn btn-link btn-sm mr-2">Cancel</a>
+        <button type="submit" class="btn btn-primary btn-sm" form="booking-edit">Submit</button>
     </div>
 </div>
 @endsection

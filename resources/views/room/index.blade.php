@@ -77,11 +77,12 @@
         </table>
 
         {{ $rooms->links() }}
+    </div>
 
+    <div class="card-footer d-flex justify-content-end">
         @can ('create_room')
         <a href="{{ route('room.create') }}" class="btn btn-primary btn-sm">
-            <i class="ti ti-plus"></i>
-            New
+            Create
         </a>
         @endcan
     </div>

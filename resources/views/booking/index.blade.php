@@ -16,6 +16,9 @@
         @includeWhen((request()->query('view') === 'table' || request()->query('view') === null), 'booking._table-view', ['bookings' => $bookings])
         @includeWhen(request()->query('view') === 'calendar', 'booking._calendar-view', ['bookings' => $bookings])
         
+    </div>
+    
+    <div class="card-footer d-flex justify-content-end">
         <a href="{{ route('booking.create') }}" class="btn btn-primary btn-sm">
             <i class="ti ti-plus"></i>
             New
